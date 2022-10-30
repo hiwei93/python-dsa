@@ -1,6 +1,8 @@
 """
 数组实现
 """
+
+
 class Array(object):
     def __init__(self, capacity: int) -> None:
         self._data = [None] * capacity

@@ -199,7 +199,8 @@ class FirstMissingPositive():
         """
         length = len(nums)
         for i in range(length):
-            while nums[i] > 0 and nums[i] <= length and nums[nums[i] - 1] != nums[i]:
+            while nums[i] > 0 and nums[i] <= length \
+                    and nums[nums[i] - 1] != nums[i]:
                 nums[nums[i] - 1], nums[i] = nums[i], nums[nums[i] - 1]
         for i in range(length):
             if i + 1 != nums[i]:
