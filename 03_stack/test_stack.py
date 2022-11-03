@@ -4,7 +4,7 @@ import sys
 
 sys.path.append("stack")
 
-from stack import ArrayStack, DynamicArrayStack
+from stack import ArrayStack, DynamicArrayStack, LinkedListStack
 
 
 class TestArrayStack(unittest.TestCase):
@@ -40,6 +40,19 @@ class TestDynmicArrayStatic(unittest.TestCase):
         stack.pop()
         print(stack)
         self.assertEqual(stack.capacity, 3)
+
+
+class TestLinkedListStack(unittest.TestCase):
+    def test_push_and_pop(self):
+        stack = LinkedListStack()
+        stack.push(1)
+        stack.push(2)
+        stack.push(3)
+        print(stack)
+        self.assertEqual(len(stack), 3)
+        self.assertEqual(stack.pop(), 3)
+        print(stack)
+        self.assertEqual(len(stack), 2)
 
 
 if __name__ == '__main__':

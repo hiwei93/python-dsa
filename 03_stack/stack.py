@@ -1,3 +1,6 @@
+from typing import Optional
+
+
 class ArrayStack(object):
     """
     顺序栈
@@ -87,4 +90,44 @@ class DynamicArrayStack(object):
         self.__count -= 1
         if self.__capacity / self.__count == self.__factor:
             self.__reduce()
+        return item
+
+
+class Node(object):
+    def __init__(self, data: Optional[int] = None, next: Optional['Node'] = None):
+        self.data = data
+        self.next = next
+
+
+class LinkedListStack(object):
+    """
+    链式栈的实现
+    """
+    def __init__(self):
+        self.__top = None
+        self.__size = 0
+
+    def __iter__(self):
+        p = self.__top
+        while p:
+            yield p.data
+            p = p.next
+
+    def __repr__(self):
+        return " -> ".join((str(i) for i in self))
+
+    def __len__(self):
+        return self.__size
+
+    def push(self, item: int):
+        new_node = Node(item, self.__top)
+        self.__top = new_node
+        self.__size += 1
+
+    def pop(self):
+        if not self.__top:
+            return None
+        item = self.__top.data
+        self.__top = self.__top.next
+        self.__size -= 1
         return item
