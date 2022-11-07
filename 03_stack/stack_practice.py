@@ -1,3 +1,8 @@
+"""
+栈练习题：
+- https://leetcode.cn/problem-list/cC9Vnw7N
+"""
+
 from typing import List
 
 
@@ -218,5 +223,38 @@ class LongestValidParentheses:
         return max_len
 
 
+class BackspaceStringCompare:
+    """
+    https://leetcode.cn/problems/backspace-string-compare
+    """
+    @classmethod
+    def convert_str2stack(cls, value: str):
+        stack = []
+        for elem in value:
+            if elem == '#':
+                if len(stack):
+                    stack.pop()
+            else:
+                stack.append(elem)
+        return stack
+
+    @classmethod
+    def solution(cls, s: str, t: str) -> bool:
+        """
+        时间复杂度：O(m + n)
+        空间复杂度：O(m + n)
+        """
+        stack_s = cls.convert_str2stack(s)
+        stack_t = cls.convert_str2stack(t)
+        if len(stack_s) != len(stack_t):
+            return False
+        while stack_s or stack_t:
+            value_s = stack_s.pop()
+            value_t = stack_t.pop()
+            if value_s != value_t:
+                return False
+        return True
+
+
 if __name__ == '__main__':
-    print(LongestValidParentheses.solution(")()())"))
+    print(BackspaceStringCompare.solution("ab#c", "ad#c"))
