@@ -117,3 +117,74 @@ class LinkedListQueue(object):
         value = self.__head.data
         self.__head = self.__head.next
         return value
+
+
+class CircularQueue(object):
+    def __init__(self, capacity: int):
+        # 额外多出一个存储，用于判断是否队满
+        self.__capacity = capacity + 1
+        self.__items = [None] * self.__capacity
+        self.__head = 0
+        self.__tail = 0
+
+    def __iter__(self):
+        p = self.__head
+        while p != self.__tail:
+            yield self.__items[p]
+            p = (p + 1) % self.__capacity
+
+    def __repr__(self):
+        return str(list(self))
+
+    def enqueue(self, value: int) -> bool:
+        # 判断队满
+        if (self.__tail + 1) % self.__capacity == self.__head:
+            return False
+        self.__items[self.__tail] = value
+        self.__tail = (self.__tail + 1) % self.__capacity
+        return True
+
+    def dequeue(self):
+        if self.__head == self.__tail:
+            return None
+        value = self.__items[self.__head]
+        self.__head = (self.__head + 1) % self.__capacity
+        return value
+
+
+class CircularQueueV2(object):
+    """
+    循环队列，不牺牲存储空间的实现方式
+    """
+    def __init__(self, capacity: int):
+        # 额外多出一个存储，用于判断是否队满
+        self.__capacity = capacity
+        self.__items = [None] * capacity
+        self.__size = 0
+        self.__head = 0
+        self.__tail = 0
+
+    def __iter__(self):
+        for i in range(self.__size):
+            p = (self.__head + i) % self.__capacity
+            yield self.__items[p]
+
+    def __repr__(self):
+        return str(list(self))
+
+    def enqueue(self, value: int) -> bool:
+        # 判断队满
+        if self.__tail == self.__head and self.__size == self.__capacity:
+            return False
+        self.__items[self.__tail] = value
+        self.__tail = (self.__tail + 1) % self.__capacity
+        self.__size += 1
+        return True
+
+    def dequeue(self):
+        if self.__size == 0:
+            return None
+        value = self.__items[self.__head]
+        self.__head = (self.__head + 1) % self.__capacity
+        self.__size -= 1
+        return value
