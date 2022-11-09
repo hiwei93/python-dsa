@@ -256,5 +256,67 @@ class BackspaceStringCompare:
         return True
 
 
+class BasicCalculator:
+    """
+    https://leetcode.cn/problems/basic-calculator
+    TODO：需要再次实现，确保已经理解
+    """
+    @staticmethod
+    def solution(s: str) -> int:
+        """
+        括号展开方法
+        """
+        op_stack = [1]
+        sign = 1
+        result = 0
+        i, n = 0, len(s)
+
+        while i < n:
+            if s[i] == ' ':
+                i += 1
+            elif s[i] == '+':
+                sign = op_stack[-1]
+                i += 1
+            elif s[i] == '-':
+                sign = -op_stack[-1]
+                i += 1
+            elif s[i] == '(':
+                op_stack.append(sign)
+                i += 1
+            elif s[i] == ')':
+                op_stack.pop()
+                i += 1
+            else:
+                num = 0
+                while i < n and s[i].isdigit():
+                    num = num * 10 + ord(s[i]) - ord('0')
+                    i += 1
+                result += num * sign
+        return result
+
+
+class BaseballGame:
+    """
+    https://leetcode.cn/problems/baseball-game
+    """
+    @staticmethod
+    def solution(operations: List[str]) -> int:
+        score_stack = []
+        for op in operations:
+            if op == '+':
+                first = score_stack.pop()
+                second = score_stack.pop()
+                score_stack.append(second)
+                score_stack.append(first)
+                score_stack.append(first + second)
+            elif op == 'C':
+                score_stack.pop()
+            elif op == 'D':
+                score_stack.append(2 * score_stack[-1])
+            else:
+                score_stack.append(int(op))
+        return sum(score_stack)
+
+
 if __name__ == '__main__':
-    print(BackspaceStringCompare.solution("ab#c", "ad#c"))
+    print(BasicCalculator().calculate(" 2-1 + 2 "))
