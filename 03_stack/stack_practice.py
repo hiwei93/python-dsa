@@ -318,5 +318,55 @@ class BaseballGame:
         return sum(score_stack)
 
 
+class NextGreaterElementI:
+    """
+    https://leetcode.cn/problems/next-greater-element-i
+    """
+    @staticmethod
+    def solution(nums1: List[int], nums2: List[int]) -> List[int]:
+        """
+        暴力解法：
+        时间复杂度：O(m * n)
+        """
+        result = []
+        for elem1 in nums1:
+            position, next_max = -1, -1
+            for i, elem2 in enumerate(nums2):
+                if elem1 == elem2:
+                    position = i
+                if position > -1 and elem2 > elem1:
+                    next_max = elem2
+                    break
+            result.append(next_max)
+        return result
+
+    """
+    问题
+    1. 需要找到num1在num2中的位置
+    2. 找到num2中元素后面的第一个最大值
+
+    优化
+    1. 先处理num2，把每个值后面的的第一个最大值先计算出来
+    2. 使用哈希表存储元素值与其一个最大值的关系
+    3. 使用单调栈计算第一个最大值
+    """
+    @staticmethod
+    def solution_by_stack(nums1: List[int], nums2: List[int]) -> List[int]:
+        """
+        单调栈 + 哈希表
+        时间复杂度：O(m+n)
+        空间复杂度: O(n)
+        """
+        next_greater_map = {}
+        stack = []
+        for i in range(len(nums2) - 1, -1, -1):
+            num = nums2[i]
+            while stack and stack[-1] <= num:
+                stack.pop()
+            next_greater_map[num] = stack[-1] if stack else -1
+            stack.append(num)
+        return [next_greater_map[n] for n in nums1]
+
+
 if __name__ == '__main__':
-    print(BasicCalculator().calculate(" 2-1 + 2 "))
+    print(NextGreaterElementI.solution_by_stack([4, 1, 2], [1, 3, 4, 2]))
