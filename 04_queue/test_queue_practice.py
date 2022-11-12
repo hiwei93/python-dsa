@@ -4,7 +4,7 @@ import sys
 
 sys.path.append("queue_practice")
 
-from queue_practice import CircularDequeLinkedList
+from queue_practice import CircularDequeLinkedList, MyCircularQueueByArray
 
 
 class TestCircularDequeLinkedList(unittest.TestCase):
@@ -59,6 +59,15 @@ class TestCircularDequeLinkedList(unittest.TestCase):
             queue.deleteLast()
         self.assertEqual(queue.deleteLast(), False)
         self.assertEqual(queue.getRear(), -1)
+
+
+class TestMyCircularQueueByArray(unittest.TestCase):
+    def test_solution(self):
+        q = MyCircularQueueByArray(3)
+        for i in range(3):
+            self.assertEqual(q.enQueue(i + 1), True)
+        self.assertEqual(q.enQueue(4), False)
+        self.assertEqual(q.Rear(), 3)
 
 
 if __name__ == '__main__':
