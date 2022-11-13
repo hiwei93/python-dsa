@@ -241,6 +241,54 @@ class MyCircularQueueByArray:
         return self.size == self.capacity
 
 
-"""
-TODO: 设计循环队列, 链表方式实现
-"""
+class LinkedNode:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+
+class MyCircularQueueByLinkedList:
+    """
+    622. 设计循环队列 - 链表方式实现
+    """
+    def __init__(self, k: int):
+        self.capacity = k
+        self.head = None
+        self.tail = None
+        self.size = 0
+
+    def enQueue(self, value: int) -> bool:
+        if self.isFull():
+            return False
+        node = LinkedNode(value)
+        if self.size == 0:
+            self.head = node
+            self.tail = node
+        else:
+            self.tail.next = node
+            self.tail = node
+        self.size += 1
+        return True
+
+    def deQueue(self) -> bool:
+        if self.isEmpty():
+            return False
+        self.head = self.head.next
+        self.size -= 1
+        return True
+
+    def Front(self) -> int:
+        if self.isEmpty():
+            return -1
+        return self.head.value
+
+    def Rear(self) -> int:
+        if self.isEmpty():
+            return -1
+        return self.tail.value
+
+    def isEmpty(self) -> bool:
+        return self.size == 0
+
+    def isFull(self) -> bool:
+        return self.size == self.capacity
