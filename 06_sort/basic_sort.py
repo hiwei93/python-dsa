@@ -40,7 +40,7 @@ def insertion_sort_v2(nums: list):
     插入排序, 官方实现版本
     """
     n = len(nums)
-    if n <= 0:
+    if n <= 1:
         return
 
     for i in range(1, n):
