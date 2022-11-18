@@ -10,37 +10,30 @@ def findKthLargestNum(nums: list, k: int):
     空间复杂度：O(logn)
     """
     n = len(nums)
-    result = None
     if k > n:
         raise ValueError(f"{k=} is bigger than length of nums")
 
     def partition(p: int, r: int):
         povit = nums[r]
-        i = p
-        for j in range(p, r - 1):
+        i = j = p
+        while j < r - 1:
             if nums[j] < povit:
                 nums[i], nums[j] = nums[j], nums[i]
                 i += 1
+            j += 1
         nums[i], nums[r] = nums[r], nums[i]
         return i
 
     def findKthLargestNum_c(p: int, r: int):
-        nonlocal result
-        if p >= r:
-            if p + 1 == k:
-                result = nums[p]
-            return
         q = partition(p, r)
         if q + 1 == k:
-            result = nums[q]
-            return
+            return nums[q]
         if q + 1 > k:
-            findKthLargestNum_c(p, q - 1)
-        else:  # q + 1 < k
-            findKthLargestNum_c(q + 1, r)
+            return findKthLargestNum_c(p, q - 1)
+        # q + 1 < k
+        return findKthLargestNum_c(q + 1, r)
 
-    findKthLargestNum_c(0, n-1)
-    return result
+    return findKthLargestNum_c(0, n-1)
 
 
 class FindKthLargestElem:
