@@ -4,23 +4,7 @@ import sys
 
 sys.path.extend("sort_practice")
 
-from sort_practice import findKthLargestNum, FindKthLargestElem
-
-
-class TestFindKthLargestNum(unittest.TestCase):
-    def test_solution(self):
-        nums, k = [4, 2, 5, 12, 3], 3
-        expected = 4
-        self.assertEqual(findKthLargestNum(nums, k), expected)
-        nums, k = [4, 2, 5, 12, 3], 1
-        expected = 2
-        self.assertEqual(findKthLargestNum(nums, k), expected)
-        nums, k = [4, 2, 5, 12, 3], 5
-        expected = 12
-        self.assertEqual(findKthLargestNum(nums, k), expected)
-        nums, k = [4, 2, 5, 12, 3], 6
-        with self.assertRaises(ValueError):
-            findKthLargestNum(nums, k)
+from sort_practice import FindKthLargestElem
 
 
 class TestFindKthLargestElem(unittest.TestCase):
@@ -33,6 +17,9 @@ class TestFindKthLargestElem(unittest.TestCase):
         self.assertEqual(FindKthLargestElem.solution(nums, k), expected)
         nums, k = [3, 2, 3, 1, 2, 4, 5, 5, 6], 9
         expected = 1
+        self.assertEqual(FindKthLargestElem.solution(nums, k), expected)
+        nums, k = [2, 1], 1
+        expected = 2
         self.assertEqual(FindKthLargestElem.solution(nums, k), expected)
 
 
