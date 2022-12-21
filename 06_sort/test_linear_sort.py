@@ -1,10 +1,11 @@
+import random
 import unittest
 
 import sys
 
 sys.path.extend('linear_sort')
 
-from linear_sort import BucketSort, CountingSort
+from linear_sort import BucketSort, CountingSort, RadixSort
 
 
 class TestLinearSort(unittest.TestCase):
@@ -19,6 +20,12 @@ class TestLinearSort(unittest.TestCase):
         expected = sorted(nums)
         CountingSort.sort(nums)
         self.assertEqual(nums, expected)
+
+    def test_radix_sort(self):
+        nums = [random.randint(10000, 100000000) for _ in range(1000)]
+        excepted = sorted(nums)
+        RadixSort.sort(nums)
+        self.assertEqual(nums, excepted)
 
 
 if __name__ == '__main__':

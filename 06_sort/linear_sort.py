@@ -104,3 +104,40 @@ class CountingSort(object):
         # 排序结果拷贝回原始数组
         for i in range(n):
             nums[i] = _sorted[i]
+
+
+class RadixSort(object):
+    """
+    基数排序
+    """
+    @classmethod
+    def sort(cls, nums):
+        max_v = nums[0]
+        for num in nums:
+            if num > max_v:
+                max_v = num
+
+        exp = 1
+        while max_v // exp > 0:
+            cls.counting_sort(nums, exp)
+            exp *= 10
+
+    @classmethod
+    def counting_sort(cls, nums, exp):
+        buckets = [0] * 10
+        for num in nums:
+            buckets[(num // exp) % 10] += 1
+
+        for i in range(1, 10):
+            buckets[i] += buckets[i-1]
+
+        n = len(nums)
+        _sorted = [None] * n
+        for i in range(n - 1, -1, -1):
+            num = nums[i]
+            index = buckets[(num // exp) % 10] - 1
+            _sorted[index] = num
+            buckets[(num // exp) % 10] -= 1
+
+        for i in range(n):
+            nums[i] = _sorted[i]
