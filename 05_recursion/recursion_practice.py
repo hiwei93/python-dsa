@@ -16,7 +16,7 @@ class ClimbingStairs:
             return 1
         if n == 2:
             return 2
-        return cls.climbStairs(n - 1) + cls.climbStairs(n - 2)
+        return cls.basic_solution(n - 1) + cls.basic_solution(n - 2)
 
     @classmethod
     def cache_solution(cls, n: int) -> int:
@@ -31,7 +31,7 @@ class ClimbingStairs:
             return 2
         if n in cls.cache:
             return cls.cache[n]
-        result = cls.climbStairs(n - 1) + cls.climbStairs(n - 2)
+        result = cls.cache_solution(n - 1) + cls.cache_solution(n - 2)
         cls.cache[n] = result
         return result
 
